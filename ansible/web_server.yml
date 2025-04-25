@@ -1,0 +1,17 @@
+---
+- name: Web Server Creation
+  hosts: myhosts
+  # remote_user: root
+  # become: true
+  tasks:
+    - name: install apache2
+      apt:
+       name: apache2
+       state: latest
+    - name: create content
+      copy:
+        content: "Congrats! Your web server is working...."
+        dest: /var/www/html/index.html
+    - name: start apache2
+      shell: | 
+        service apache2 start

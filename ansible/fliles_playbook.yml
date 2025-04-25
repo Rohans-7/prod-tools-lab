@@ -1,0 +1,37 @@
+---
+- name: Create all file types in /home/rohan-sonawane/spe/ansible/q5/temp directory
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure the /home/rohan-sonawane/spe/ansible/q5/temp directory exists
+      file:
+        path: /home/rohan-sonawane/spe/ansible/q5/temp
+        state: directory
+
+    - name: Create a regular file
+      file:
+        path: /home/rohan-sonawane/spe/ansible/q5/temp/regular_file
+        state: touch
+
+    - name: Create a directory named 'opt'
+      file:
+        path: /home/rohan-sonawane/spe/ansible/q5/temp/opt
+        state: directory
+
+    - name: Create a character device
+      command: mknod /home/rohan-sonawane/spe/ansible/q5/temp/char_device c 1 5
+
+    - name: Create a block device
+      command: mknod /home/rohan-sonawane/spe/ansible/q5/temp/block_device b 8 0
+
+    - name: Create a symbolic link
+      file:
+        src: /home/rohan-sonawane/spe/ansible/q5/temp/regular_file
+        dest: /home/rohan-sonawane/spe/ansible/q5/temp/symlink
+        state: link
+
+    - name: Create a hard link
+      command: ln /home/rohan-sonawane/spe/ansible/q5/temp/regular_file /home/rohan-sonawane/spe/ansible/q5/temp/hardlink
+
+    - name: Create a FIFO file
+      command: mkfifo /home/rohan-sonawane/spe/ansible/q5/temp/fifo

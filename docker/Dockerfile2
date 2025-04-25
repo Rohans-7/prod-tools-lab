@@ -1,0 +1,19 @@
+# Stage 1: Build the C application
+FROM gcc:latest AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the C source code into the container
+COPY hello.c .
+
+# Compile the C application as a static binary
+RUN gcc -static -o hello hello.c
+
+# Stage 2: Create a lightweight image
+FROM alpine:latest
+
+# Copy the compiled static binary from the previous stage
+COPY --from=build /app/hello /usr/local/bin/hello
+
+ENTRYPOINT ["/usr/local/bin/hello"]

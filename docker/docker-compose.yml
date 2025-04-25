@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./html:/usr/share/nginx/html
+    expose:
+      - "80"  # Exposes port 80 internally (no direct binding to host)
+  loadbalancer:
+    image: traefik:v2.8
+    ports:
+      - "8081:80"  # Bind the load balancer to host port 8080
+    command:
+      - --providers.docker
+      - --entrypoints.web.address=:80

@@ -1,0 +1,9 @@
+---
+- name: Demo Playbook for Ansible Numerical Loop
+  hosts: localhost
+  tasks:
+    - name: Create directories with numerical loop
+      file:
+        path: "~/spm/ansible/q9/demo_dir_{{ item }}"
+        state: directory
+      with_sequence: start=1 end=5

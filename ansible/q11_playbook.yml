@@ -1,0 +1,15 @@
+---
+- name: Demonstrate Ansible Facts
+  hosts: localhost
+  tasks:
+    - name: Display Host Facts
+      debug:
+        msg: |
+          Operating System: {{ ansible_facts['os_family'] }}
+          Distribution: {{ ansible_facts['distribution'] }}
+          Distribution Version: {{ ansible_facts['distribution_version'] }}
+          Kernel: {{ ansible_facts['kernel'] }}
+          Total Memory: {{ ansible_facts['memtotal_mb'] }} MB
+          Number of CPUs: {{ ansible_facts['processor_cores'] }}
+          Hostname: {{ ansible_facts['hostname'] }}
+          IP Address: {{ ansible_facts['default_ipv4']['address'] }}

@@ -1,0 +1,18 @@
+kubectl top pods
+kubectl get svc nginx-service
+kubectl apply -f nginx-deployment.yaml
+kubectl config set-context --current --namespace=demo-basic-commands
+kubectl get svc nginx-service
+kubectl get services
+minikube ip
+minikube service list
+kubectl get deployments
+kubectl delete deployment nginx-deployment
+kubectl exec -it pod/nginx-pod -n nginx -- bash
+kubectl describe pod nginx-pod -n nginx
+kubectl set image deployment/nginx-deployment -n nginx nginx=nginx:1.27.3
+kubectl get pods -n nginx -o wide
+kubectl get pod | grep metrics-server
+kubectl get pods -n nginx | grep metrics-server
+
+Desired pods = scaling decision[]

@@ -1,0 +1,30 @@
+---
+- name: Ansible Template Demonstration
+  hosts: myhosts
+  vars:
+    app_name: "MyApp"
+    env: "production"
+    version: "1.0.0"
+    db_host: "localhost"
+    db_port: 3306
+    db_name: "myapp_db"
+    db_user: "admin"
+    db_password: "password123"
+  tasks:
+    - name: Create destination directory for configuration file
+      file:
+        path: /home/rohan-sonawane/spe/ansible/q8/configurations
+        state: directory
+
+    - name: Generate configuration file using a template
+      template:
+        src: templates/config.j2
+        dest: /home/rohan-sonawane/spe/ansible/q8/configurations/app_config.yml
+
+    - name: Display the generated configuration file
+      command: cat /home/rohan-sonawane/spe/ansible/q8/configurations/app_config.yml
+      register: output
+
+    - name: Print the configuration file contents
+      debug:
+        msg: "{{ output.stdout }}"

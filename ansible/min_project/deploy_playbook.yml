@@ -1,0 +1,18 @@
+---
+- name: Deploy Hello World program
+  hosts: deployment
+  become: yes
+  tasks:
+    - name: Create deployment directory
+      file:
+        path: /opt/deploy
+        state: directory
+
+    - name: Copy Hello World binary to deployment container
+      copy:
+        src: /home/rohan-sonawane/spe/ansible/min_project/hello
+        dest: /opt/deploy/hello
+        mode: '0755'
+
+    - name: Execute Hello World program
+      command: /opt/deploy/hello

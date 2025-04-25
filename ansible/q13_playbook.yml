@@ -1,0 +1,20 @@
+---
+- name: Disk Space Monitoring and Email Alert
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Check available disk space
+      shell: df -h | grep /dev/sda3 | awk '{print $5}' | sed 's/%//'
+      register: disk_usage
+
+    - name: Send email if disk space is low
+      mail:
+        host: smtp.gmail.com
+        port: 587
+        username: "rohandinkar.sonawane@iiitb.ac.in"
+        password: "Pass@1818"
+        to: "rohansonawane1818@gmail.com"
+        subject: "Warning: Disk usage is above 80%!"
+        body: "Current disk usage is {{ disk_usage.stdout }}%. Immediate action is needed."
+        secure: starttls
+      when: disk_usage.stdout | int < 80

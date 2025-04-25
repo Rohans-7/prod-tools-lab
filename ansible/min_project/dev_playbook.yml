@@ -1,0 +1,25 @@
+---
+- name: Setup development environment
+  hosts: development
+  become: yes
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - build-essential
+          - gcc
+        state: present
+        update_cache: yes
+
+    - name: Create Hello World C program
+      copy:
+        dest: /home/dev/hello.c
+        content: |
+          #include <stdio.h>
+          int main() {
+              printf("Hello, World!\\n");
+              return 0;
+          }
+
+    - name: Compile Hello World program
+      command: gcc -o /home/dev/hello /home/dev/hello.c

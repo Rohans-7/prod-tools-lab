@@ -1,0 +1,25 @@
+---
+- name: Demonstrate Conditionals in Ansible
+  hosts: localhost
+  gather_facts: yes
+
+  vars:
+    package_name: "vim"
+
+  tasks:
+
+    - name: Install a package if it's not already installed
+      apt:
+        name: "{{ package_name }}"
+        state: present
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Print message if the package is installed
+      debug:
+        msg: "{{ package_name }} is installed on a Debian-based system."
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Skip installation and print a message if not Debian
+      debug:
+        msg: "This task is skipped because the host OS is not Debian-based."
+      when: ansible_facts['os_family'] != "Debian"

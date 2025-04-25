@@ -1,0 +1,20 @@
+---
+- name: Test Hello World program
+  hosts: testing
+  become: yes
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - gcc
+        state: present
+        update_cache: yes
+
+    - name: Copy Hello World binary to testing container
+      copy:
+        src: /home/rohan-sonawane/spe/ansible/min_project/hello
+        dest: /home/test/hello
+        mode: '0755'
+
+    - name: Run Hello World program
+      command: /home/test/hello

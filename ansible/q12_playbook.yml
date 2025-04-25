@@ -1,0 +1,13 @@
+---
+- name: Check Disk Usage and Alert
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Check available disk space
+      shell: df -h | grep '/dev/sda3' | awk '{print $5}' | sed 's/%//'
+      register: disk_usage
+
+    - name: Alert if disk space is low
+      debug:
+        msg: "Warning: Disk usage is above 80%! Current usage is {{ disk_usage.stdout }}%."
+      when: disk_usage.stdout | int < 5
